@@ -10,11 +10,11 @@ const CONFIG = {
   currency: "USD",
   whatsappNumber: "+593980460449",
   bankInfo: {
-    bank: "Banco del Pacífico",         // ← CAMBIAR
-    accountHolder: "Deutsche Cycling Spot S.A.S.", // ← CAMBIAR
-    accountNumber: "XXXX-XXXX-XXXX",   // ← CAMBIAR
-    accountType: "Corriente",           // ← CAMBIAR
-    identification: "RUC: XXXXXXXXXXX01" // ← CAMBIAR
+    bank: "BANCO PICHINCHA ",         // ← CAMBIAR
+    accountHolder: "ALEJANDRO VASQUEZ RUANO", // ← CAMBIAR
+    accountNumber: "2206685155",   // ← CAMBIAR
+    accountType: "Ahorro",           // ← CAMBIAR
+    identification: "Cedula: 1753256690" // ← CAMBIAR
   }
 };
 
@@ -47,7 +47,7 @@ const PRODUCTS = [
     id: "P001", brand: "MAGENE", category: "Electrónica",
     name: "MAGENE Banda Frecuencia Cardiaca H603 Azul",
     code: "6971606841288", price: 40, stock: 3,
-    img: "img/products/P001.png",
+    img: "img/products/P001.jpg",
     description: "Monitor cardíaco profesional con tecnología dual ANT+/Bluetooth. Resistente al agua IP67. Compatible con Garmin, Wahoo y Magene. Batería CR2032 de larga duración.",
     features: ["ANT+ & Bluetooth dual", "Resistencia IP67 al agua", "Compatible Garmin, Wahoo, Magene", "Batería CR2032", "Ideal para zonas de frecuencia cardíaca"]
   },
@@ -55,7 +55,7 @@ const PRODUCTS = [
     id: "P002", brand: "MAGENE", category: "Electrónica",
     name: "MAGENE Ciclocomputador C706",
     code: "697160684318", price: 300, stock: 1,
-    img: "img/products/P002.png",
+    img: "img/products/P002.jpg",
     description: "GPS premium touchscreen color 4.0'. Compatible con sensores ANT+/BLE. Mapas con navegación giro a giro, integración directa con Strava y TrainingPeaks. Resistente al agua IPX7.",
     features: ["Pantalla touchscreen color 4.0\"", "GPS + mapas navegación", "ANT+ & BLE", "Integración Strava/TrainingPeaks", "Resistente IPX7"]
   },
@@ -63,7 +63,7 @@ const PRODUCTS = [
     id: "P003", brand: "MAGENE", category: "Electrónica",
     name: "MAGENE Ciclocomputador C606v2",
     code: "697160684326", price: 195, stock: 1,
-    img: "img/products/P003.png",
+    img: "img/products/P003.jpg",
     description: "GPS touchscreen 2.8'. Navegación giro a giro, sensores ANT+/BLE, batería de hasta 20 horas. Excelente relación precio-rendimiento para ciclistas intermedios.",
     features: ["Pantalla touchscreen 2.8\"", "Navegación giro a giro", "ANT+ & BLE", "Batería 20 horas", "Ideal ciclistas intermedios"]
   },
@@ -71,7 +71,7 @@ const PRODUCTS = [
     id: "P004", brand: "MAGENE", category: "Electrónica",
     name: "MAGENE Ciclocomputador C506",
     code: "6971606841", price: 100, stock: 2,
-    img: "img/products/P004.png",
+    img: "img/products/P004.jpg",
     description: "GPS básico con pantalla e-paper de ultra bajo consumo. ANT+/BLE. Batería de hasta 30 horas. Ligero y funcional para entrenamientos diarios.",
     features: ["Pantalla e-paper ultraligera", "GPS integrado", "ANT+ & BLE", "Batería 30 horas", "Perfecto para entrenamiento diario"]
   },
@@ -79,7 +79,7 @@ const PRODUCTS = [
     id: "P005", brand: "MAGENE", category: "Electrónica",
     name: "MAGENE Ciclocomputador C506SE",
     code: "6971606842094", price: 100, stock: 2,
-    img: "img/products/P005.png",
+    img: "img/products/P005.jpg",
     description: "Versión Special Edition del C506. Mismas especificaciones técnicas con diseño premium exclusivo. ANT+/BLE, pantalla e-paper, 30h de batería.",
     features: ["Edición Especial diseño premium", "GPS integrado", "ANT+ & BLE", "Batería 30 horas", "E-paper de bajo consumo"]
   },
@@ -111,7 +111,7 @@ const PRODUCTS = [
     id: "P009", brand: "MAGENE", category: "Electrónica",
     name: "MAGENE Luz Radar L508",
     code: "6971606841103", price: 125, stock: 1,
-    img: "img/products/P009.png",
+    img: "img/products/P009.jpg",
     description: "Luz trasera con radar integrado. Detecta vehículos hasta 140 metros. Alerta automática al ciclocomputador vía ANT+. 50 lúmenes. Esencial para la seguridad en ruta.",
     features: ["Radar hasta 140m", "Alerta al ciclocomputador ANT+", "50 lúmenes de brillo", "Recargable USB", "Esencial para seguridad vial"]
   },
@@ -119,7 +119,7 @@ const PRODUCTS = [
     id: "P010", brand: "MAGENE", category: "Sensor",
     name: "MAGENE Sensor Cadencia/Velocidad S314",
     code: "6971606840984", price: 30, stock: 1,
-    img: "img/products/P010.png",
+    img: "img/products/P010.jpg",
     description: "Sensor dual de cadencia y velocidad. ANT+/BLE. Batería recargable USB, sin pila de botón. Instalación sin herramientas en cualquier bicicleta.",
     features: ["Dual: cadencia + velocidad", "ANT+ & BLE", "Batería recargable USB", "Sin herramientas", "Universal para cualquier bici"]
   },
@@ -127,7 +127,7 @@ const PRODUCTS = [
     id: "P011", brand: "MAGENE", category: "Rodillo",
     name: "MAGENE Rodillo Inteligente T200",
     code: "6971606841042", price: 770, stock: 1,
-    img: "img/products/P011.png",
+    img: "img/products/P011.jpg",
     description: "Rodillo de transmisión directa hasta 2000W de resistencia. Modo ERG automático. Compatible con Zwift, TrainerRoad y Rouvy. Silencioso. El setup definitivo para indoor training.",
     features: ["Transmisión directa al cuadro", "Hasta 2000W resistencia", "Modo ERG automático", "Compatible Zwift/TrainerRoad/Rouvy", "Ultra silencioso"]
   },

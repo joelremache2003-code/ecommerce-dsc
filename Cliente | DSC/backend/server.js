@@ -56,6 +56,13 @@ app.post('/webhook/whatsapp', async (req, res) => {
               mediaUrl: [product.foto_url],
             });
           }
+          if (product && product.canva_url) {
+            await twilioClient.messages.create({
+              from: process.env.TWILIO_WHATSAPP_NUMBER,
+              to: from,
+              body: `Ver más fotos del producto: ${product.canva_url}`,
+            });
+          }
         }
       } catch (photoErr) {
         console.warn('⚠️ No se pudo enviar foto:', photoErr.message);
