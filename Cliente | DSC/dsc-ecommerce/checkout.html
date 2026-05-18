@@ -285,11 +285,26 @@ function removeItem(id) {
   renderSummary();
 }
 
-function handleWhatsApp() {
+async function handleWhatsApp() {
   const name = `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`.trim();
   const city = document.getElementById('city').value.trim();
+  const phone = document.getElementById('phone') ? document.getElementById('phone').value.trim() : '';
+  const address = document.getElementById('address') ? document.getElementById('address').value.trim() : '';
+  const notes = document.getElementById('notes') ? document.getElementById('notes').value.trim() : '';
   if (!name) { showToast('Por favor ingresa tu nombre'); document.getElementById('firstName').focus(); return; }
-  openWhatsAppCart(name || 'Cliente', city || 'No especificada');
+
+  const items = getCartItems().map(i => ({ id: i.id, name: i.name, qty: i.qty, price: i.price, subtotal: i.subtotal }));
+  const total = getCartTotal();
+
+  try {
+    await fetch('https://ecommerce-dsc-production.up.railway.app/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items, total, customerName: name, customerCity: city || 'No especificada', phone, address, notes }),
+    });
+  } catch (_) {}
+
+  openWhatsAppCart(name, city || 'No especificada');
 }
 
 // Init

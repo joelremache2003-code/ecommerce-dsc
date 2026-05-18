@@ -2,8 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const twilio = require('twilio');
 const cors = require('cors');
-const { initDB } = require('./db');
+const { initDB, saveOrder } = require('./db');
 const { generateResponse } = require('./bot');
+const { notifyOwner } = require('./telegram');
 
 const app = express();
 app.use(cors());
@@ -55,6 +56,21 @@ app.post('/webhook/whatsapp', async (req, res) => {
     } catch (fallbackErr) {
       console.error('❌ Error fallback Twilio:', fallbackErr.message);
     }
+  }
+});
+
+// Endpoint para recibir pedidos desde la web
+app.post('/api/order', async (req, res) => {
+  const { items, total, customerName, customerCity, phone, address, notes } = req.body;
+  if (!items || !total) return res.status(400).json({ error: 'Datos incompletos' });
+
+  try {
+    const orderId = await saveOrder(phone || '', customerName || '', customerCity || '', items, total);
+    notifyOwner({ items, total, customerName, customerCity, phone, address, notes }).catch(() => {});
+    res.json({ success: true, orderId });
+  } catch (err) {
+    console.error('❌ Error guardando pedido:', err.message);
+    res.status(500).json({ error: 'Error interno' });
   }
 });
 
