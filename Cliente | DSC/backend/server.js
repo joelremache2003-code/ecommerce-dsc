@@ -66,14 +66,9 @@ app.get('/orders', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-initDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`DSC Bot corriendo en puerto ${PORT}`);
-      console.log(`Webhook: POST /webhook/whatsapp`);
-    });
-  })
-  .catch(err => {
-    console.error('Error inicializando DB:', err);
-    process.exit(1);
+initDB().finally(() => {
+  app.listen(PORT, () => {
+    console.log(`DSC Bot corriendo en puerto ${PORT}`);
+    console.log(`Webhook: POST /webhook/whatsapp`);
   });
+});

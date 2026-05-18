@@ -31,7 +31,7 @@
 .thumb img{width:100%;height:100%;object-fit:cover}
 /* Product info */
 .product-info{position:sticky;top:6rem}
-.product-info-brand{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+.product-info-brand{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent-text);margin-bottom:.5rem}
 .product-info-name{font-family:'Bebas Neue',var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:400;line-height:1.05;letter-spacing:.02em;text-transform:uppercase;margin-bottom:1rem}
 .product-info-price{font-size:2.4rem;font-weight:700;font-family:var(--font-display);margin-bottom:1.5rem}
 .product-info-price sub{font-size:1rem;font-weight:500;color:var(--t2);vertical-align:middle}
@@ -49,7 +49,7 @@
 .divider-thin{height:1px;background:var(--border);margin:1.5rem 0}
 .feature-list{list-style:none;display:flex;flex-direction:column;gap:.6rem}
 .feature-list li{display:flex;align-items:center;gap:.65rem;font-size:.88rem;color:var(--t2)}
-.feature-list li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0}
+.feature-list li::before{content:'✓';color:var(--accent-text);font-weight:700;flex-shrink:0}
 .desc-text{color:var(--t2);line-height:1.75;font-size:.93rem}
 .related-section{margin-top:5rem;padding-top:3rem;border-top:1px solid var(--border)}
 @media(max-width:768px){
@@ -61,7 +61,7 @@
 </head>
 <body>
 
-<nav class="navbar scrolled" id="navbar" style="background:rgba(7,7,15,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)">
+<nav class="navbar scrolled" id="navbar">
   <div class="container navbar-inner">
     <a href="index.html" class="nav-logo">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>

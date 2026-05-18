@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="bgP022" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#880E4F"/>
+      <stop offset="100%" stop-color="#120008"/>
+    </linearGradient>
+    <radialGradient id="shineP022" cx="25%" cy="20%" r="55%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.12)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" fill="url(#bgP022)"/>
+  <rect width="400" height="400" fill="url(#shineP022)"/>
+
+  <!-- Geometric texture -->
+  <circle cx="340" cy="60" r="120" fill="rgba(255,255,255,0.04)"/>
+  <circle cx="60" cy="340" r="100" fill="rgba(255,255,255,0.03)"/>
+  <line x1="0" y1="400" x2="400" y2="0" stroke="rgba(255,255,255,0.04)" stroke-width="60"/>
+
+  <!-- Top label bar -->
+  <rect y="0" width="400" height="3" fill="rgba(200,255,0,0.6)"/>
+
+  <!-- Icon -->
+  <text x="200" y="150" text-anchor="middle" font-size="64" opacity="0.25">⭕</text>
+
+  <!-- Brand name -->
+  <text x="200" y="215" text-anchor="middle"
+    font-family="Arial Black, Arial, sans-serif"
+    font-weight="900" font-size="26"
+    fill="white" letter-spacing="3" opacity="0.95">PIRELLI</text>
+  
+
+  <!-- Divider -->
+  <line x1="140" y1="237" x2="260" y2="237"
+    stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+  <!-- Product short name -->
+  <text x="200" y="268" text-anchor="middle"
+    font-family="Arial, sans-serif" font-weight="600"
+    font-size="15" fill="rgba(255,255,255,0.75)">Cinturato Road 700x26</text>
+
+  <!-- Detail -->
+  <text x="200" y="293" text-anchor="middle"
+    font-family="Arial, sans-serif" font-size="12"
+    fill="rgba(255,255,255,0.45)">4 Estaciones · SmartEVO</text>
+
+  <!-- Bottom bar -->
+  <rect y="360" width="400" height="40" fill="rgba(0,0,0,0.3)"/>
+  <text x="200" y="386" text-anchor="middle"
+    font-family="Arial, sans-serif" font-weight="700"
+    font-size="10" fill="rgba(255,255,255,0.45)" letter-spacing="2.5">DEUTSCHE CYCLING SPOT</text>
+</svg>

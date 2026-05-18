@@ -127,7 +127,7 @@
 
 /* ── STATS STRIP ─────────────────────────────────── */
 .stats-strip {
-  background: var(--surface);
+  background: var(--card);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   padding: 2.5rem 0;
@@ -149,7 +149,7 @@
   font-family: 'Bebas Neue', var(--font-display);
   font-size: 3rem;
   line-height: 1;
-  color: var(--accent);
+  color: var(--t1);
   letter-spacing: .04em;
 }
 .stat-label {
@@ -165,7 +165,9 @@
 .brands-bar {
   padding: 1.25rem 0;
   overflow: hidden;
-  background: var(--bg);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 .marquee-track {
   display: flex;
@@ -179,13 +181,13 @@
   font-family: 'Bebas Neue', var(--font-display);
   font-size: 1.1rem;
   letter-spacing: .2em;
-  color: var(--t3);
+  color: var(--t2);
   white-space: nowrap;
   transition: color var(--transition);
 }
 .marquee-sep {
-  color: var(--accent);
-  opacity: .4;
+  color: var(--accent-text);
+  opacity: .5;
 }
 
 /* ── CATEGORIES EDITORIAL ────────────────────────── */
@@ -207,6 +209,7 @@
   text-decoration: none;
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow);
 }
 .cat-card::after {
   content: '';
@@ -214,7 +217,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 2px;
+  height: 3px;
   background: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
@@ -222,9 +225,9 @@
 }
 .cat-card:hover::after { transform: scaleX(1); }
 .cat-card:hover {
-  border-color: rgba(200,255,0,0.15);
-  background: var(--card-hover);
-  transform: translateY(-4px);
+  border-color: transparent;
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
 }
 .cat-icon { font-size: 1.75rem; margin-bottom: .25rem; }
 .cat-name {
