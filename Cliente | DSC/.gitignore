@@ -1,0 +1,21 @@
+# Variables de entorno — NUNCA subir al repositorio
+.env
+.env.local
+.env.production
+
+# Dependencias Node.js
+node_modules/
+backend/node_modules/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# Inventarios y datos de negocio sensibles (referenciales, no necesarios en git)
+*.xlsx
+DSC_sistema_ventas.csv
+
+# Build outputs
+dist/
+.vercel/

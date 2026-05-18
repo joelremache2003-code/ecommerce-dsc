@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deutsche Cycling Spot — Equipamiento Premium para Ciclismo</title>
+<meta name="description" content="Tienda online de ciclismo premium en Ecuador. GPS Magene, llantas Pirelli, nutrición NeverSecond. Asesoría experta por WhatsApp.">
+<meta property="og:title" content="Deutsche Cycling Spot — Ciclismo Premium">
+<meta property="og:description" content="Equipamiento de alto rendimiento para ciclistas de ruta y montaña.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/animations.css">
+<style>
+/* ── HERO ─────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  transform-origin: center;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(7,7,15,1) 0%,
+    rgba(7,7,15,0.75) 35%,
+    rgba(7,7,15,0.25) 65%,
+    rgba(7,7,15,0.15) 100%
+  );
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-bottom: 6rem;
+  padding-top: 10rem;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: rgba(200,255,0,0.08);
+  border: 1px solid rgba(200,255,0,0.2);
+  border-radius: 9999px;
+  padding: .35rem 1.1rem;
+  margin-bottom: 1.75rem;
+  font-size: .73rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+.hero-title {
+  font-family: 'Bebas Neue', var(--font-display);
+  font-size: clamp(4.5rem, 12vw, 11rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: .01em;
+  color: var(--t1);
+  margin-bottom: 1.75rem;
+  text-transform: uppercase;
+}
+.hero-title .accent-line {
+  color: var(--accent);
+  display: block;
+}
+.hero-sub {
+  font-size: 1.05rem;
+  color: rgba(240,240,250,0.65);
+  max-width: 440px;
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+}
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  color: rgba(255,255,255,0.3);
+  font-size: .68rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(200,255,0,0.6), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse { 0%,100%{opacity:.4;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(0.7)} }
+
+/* ── STATS STRIP ─────────────────────────────────── */
+.stats-strip {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 0;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 2rem;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Bebas Neue', var(--font-display);
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: .04em;
+}
+.stat-label {
+  font-size: .75rem;
+  color: var(--t2);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-top: .35rem;
+  text-align: center;
+}
+
+/* ── MARQUEE BRANDS ──────────────────────────────── */
+.brands-bar {
+  padding: 1.25rem 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+.marquee-track {
+  display: flex;
+  gap: 3rem;
+  animation: marquee 22s linear infinite;
+  width: max-content;
+}
+.marquee-track:hover { animation-play-state: paused; }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.marquee-item {
+  font-family: 'Bebas Neue', var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: .2em;
+  color: var(--t3);
+  white-space: nowrap;
+  transition: color var(--transition);
+}
+.marquee-sep {
+  color: var(--accent);
+  opacity: .4;
+}
+
+/* ── CATEGORIES EDITORIAL ────────────────────────── */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .75rem;
+}
+.cat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.75rem 1.5rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+.cat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+.cat-card:hover::after { transform: scaleX(1); }
+.cat-card:hover {
+  border-color: rgba(200,255,0,0.15);
+  background: var(--card-hover);
+  transform: translateY(-4px);
+}
+.cat-icon { font-size: 1.75rem; margin-bottom: .25rem; }
+.cat-name {
+  font-family: var(--font-display);
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--t1);
+}
+.cat-count { font-size: .75rem; color: var(--t2); }
+
+/* ── LIFESTYLE BANNER ────────────────────────────── */
+.lifestyle-banner {
+  position: relative;
+  height: 55vh;
+  min-height: 380px;
+  overflow: hidden;
+  border-radius: var(--r-xl);
+  margin: 0 auto;
+}
+.lifestyle-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+.lifestyle-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(7,7,15,0.9) 0%, rgba(7,7,15,0.4) 60%, transparent 100%);
+  display: flex;
+  align-items: center;
+  padding: 3rem;
+}
+.lifestyle-text { max-width: 460px; }
+.lifestyle-text h2 {
+  font-family: 'Bebas Neue', var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.lifestyle-text p { color: rgba(240,240,250,0.65); font-size: .95rem; margin-bottom: 1.5rem; }
+
+/* ── WHATSAPP CTA ─────────────────────────────────── */
+.wa-banner {
+  background: linear-gradient(135deg, #071a0e 0%, #051209 100%);
+  border: 1px solid rgba(37,211,102,0.15);
+  border-radius: var(--r-xl);
+  padding: 4rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 3rem;
+}
+.wa-text h2 {
+  font-family: 'Bebas Neue', var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: .75rem;
+  letter-spacing: .02em;
+}
+.wa-text p { color: var(--t2); max-width: 420px; font-size: .95rem; line-height: 1.7; }
+.wa-badge {
+  background: rgba(37,211,102,0.1);
+  border: 1px solid rgba(37,211,102,0.2);
+  border-radius: var(--r-full);
+  padding: .25rem .9rem;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--green);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  margin-bottom: 1rem;
+}
+.wa-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.wa-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.wa-phone-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(37,211,102,0.1);
+  border: 1px solid rgba(37,211,102,0.2);
+  border-radius: var(--r-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+/* ── SECTION HEADER ──────────────────────────────── */
+.section-header { margin-bottom: 3rem; }
+.section-header.flex-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────── */
+@media (max-width: 1024px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-item:nth-child(2) { border-right: none; }
+  .stat-item:nth-child(3) { border-right: 1px solid var(--border); border-top: 1px solid var(--border); }
+  .stat-item:nth-child(4) { border-top: 1px solid var(--border); }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .hero-title { font-size: clamp(3.5rem, 14vw, 5.5rem); }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .wa-banner { grid-template-columns: 1fr; }
+  .wa-visual { display: none; }
+  .lifestyle-banner-overlay { padding: 2rem; }
+  .lifestyle-banner-overlay h2 { font-size: 2rem; }
+}
+@media (max-width: 480px) {
+  .cat-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-item:nth-child(even) { border-right: none; }
+  .stat-item:nth-child(n+3) { border-top: 1px solid var(--border); }
+  .stat-item:nth-child(3) { border-right: 1px solid var(--border); }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ──────────────────────────────────────────────── -->
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a href="index.html" class="nav-logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <span>DSC</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="catalogo.html">Catálogo</a></li>
+      <li><a href="catalogo.html?cat=Nutrici%C3%B3n">Nutrición</a></li>
+      <li><a href="catalogo.html?cat=Electr%C3%B3nica">Electrónica</a></li>
+      <li><a href="catalogo.html?cat=Llantas">Llantas</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn btn-wa btn-sm" onclick="openWhatsAppGeneral()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Asesoría
+      </button>
+      <a href="checkout.html" class="cart-btn" id="cartBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="cart-count" id="cartCount" style="display:none">0</span>
+      </a>
+      <div class="nav-burger" id="navBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────────────── -->
+<section class="hero" id="hero">
+  <div class="hero-media">
+    <img
+      class="hero-img"
+      id="heroImg"
+      src="https://images.unsplash.com/photo-1560073743-0ba6bfcd4b5d?w=1920&q=90&auto=format&fit=crop"
+      alt="Ciclistas de alto rendimiento en ruta de montaña"
+      loading="eager"
+      fetchpriority="high"
+    >
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div class="container hero-content">
+    <div class="hero-eyebrow" id="heroEyebrow">Ciclismo de alto rendimiento</div>
+    <h1 class="hero-title" id="heroTitle">
+      Equípate<br>
+      <span class="accent-line">como un</span>
+      campeón.
+    </h1>
+    <p class="hero-sub" id="heroSub">
+      GPS Magene, llantas Pirelli, nutrición NeverSecond. Marcas de élite para quienes no se conforman con lo ordinario.
+    </p>
+    <div class="hero-actions" id="heroActions">
+      <a href="catalogo.html" class="btn btn-primary btn-lg">Explorar catálogo</a>
+      <button class="btn btn-secondary btn-lg" onclick="openWhatsAppGeneral()">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Hablar con asesor
+      </button>
+    </div>
+  </div>
+
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Descubrir</span>
+  </div>
+</section>
+
+<!-- ── STATS STRIP ──────────────────────────────────────────── -->
+<div class="stats-strip" id="statsStrip">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item gs-stat">
+        <span class="stat-num" data-count="40">40</span>
+        <span class="stat-label">Productos premium</span>
+      </div>
+      <div class="stat-item gs-stat">
+        <span class="stat-num" data-count="10">10</span>
+        <span class="stat-label">Marcas de élite</span>
+      </div>
+      <div class="stat-item gs-stat">
+        <span class="stat-num">24h</span>
+        <span class="stat-label">Respuesta WhatsApp</span>
+      </div>
+      <div class="stat-item gs-stat">
+        <span class="stat-num">EC</span>
+        <span class="stat-label">Envíos todo el país</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── BRANDS MARQUEE ───────────────────────────────────────── -->
+<div class="brands-bar">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="marquee-item">MAGENE</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">PIRELLI</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">NEVERSECOND</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">PRECISION FUEL</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">HAMMER</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">VITTORIA</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">SKRATCH</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">XCADEY</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">MAGENE</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">PIRELLI</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">NEVERSECOND</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">PRECISION FUEL</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">HAMMER</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">VITTORIA</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">SKRATCH</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">XCADEY</span><span class="marquee-sep">✦</span>
+  </div>
+</div>
+
+<!-- ── CATEGORIES ───────────────────────────────────────────── -->
+<section class="section" id="categoriesSection">
+  <div class="container">
+    <div class="section-header gs-fadeUp">
+      <span class="label">Explorar</span>
+      <h2 class="section-title">Todo lo que necesitas</h2>
+      <p class="section-sub">Desde electrónica de competición hasta nutrición deportiva de élite.</p>
+    </div>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>
+</section>
+
+<!-- ── LIFESTYLE BANNER ─────────────────────────────────────── -->
+<section class="section-sm" id="lifestyleSection">
+  <div class="container">
+    <div class="lifestyle-banner gs-scale">
+      <img
+        class="lifestyle-banner-img"
+        src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=1600&q=85&auto=format&fit=crop"
+        alt="Ciclista en ruta de alta montaña"
+        loading="lazy"
+      >
+      <div class="lifestyle-banner-overlay">
+        <div class="lifestyle-text">
+          <span class="label" style="font-size:.68rem">Equipamiento de élite</span>
+          <h2>Llantas que<br><span style="color:var(--accent)">no perdonan</span><br>la mediocridad.</h2>
+          <p>Pirelli P Zero Race, Cinturato y Scorpion. Las mismas llantas que usan los equipos WorldTour.</p>
+          <a href="catalogo.html?cat=Llantas" class="btn btn-primary">Ver llantas Pirelli →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURED PRODUCTS ────────────────────────────────────── -->
+<section class="section" id="featuredSection">
+  <div class="container">
+    <div class="section-header flex-header gs-fadeUp">
+      <div>
+        <span class="label">Selección</span>
+        <h2 class="section-title">Los más buscados</h2>
+      </div>
+      <a href="catalogo.html" class="btn btn-ghost btn-sm">Ver catálogo completo →</a>
+    </div>
+    <div class="grid g4" id="featuredGrid"></div>
+  </div>
+</section>
+
+<!-- ── SECOND LIFESTYLE BANNER ──────────────────────────────── -->
+<section class="section-sm" id="lifestyle2Section">
+  <div class="container">
+    <div class="lifestyle-banner gs-scale" style="height:48vh">
+      <img
+        class="lifestyle-banner-img"
+        src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1600&q=85&auto=format&fit=crop"
+        alt="Ciclista en acción durante una carrera"
+        loading="lazy"
+        style="object-position: center 20%;"
+      >
+      <div class="lifestyle-banner-overlay" style="background:linear-gradient(to left, rgba(7,7,15,0.9) 0%, rgba(7,7,15,0.4) 60%, transparent 100%); justify-content: flex-end;">
+        <div class="lifestyle-text" style="text-align:right">
+          <span class="label" style="font-size:.68rem;text-align:right;display:block">Nutrición deportiva</span>
+          <h2>Combustible<br>de <span style="color:var(--accent)">campeones.</span></h2>
+          <p style="margin-left:auto">NeverSecond, Precision Fuel, Hammer. Ciencia aplicada a cada pedalada.</p>
+          <div style="display:flex;justify-content:flex-end">
+            <a href="catalogo.html?cat=Nutrici%C3%B3n" class="btn btn-primary">Ver nutrición →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHATSAPP CTA ──────────────────────────────────────────── -->
+<section class="section" id="waSection">
+  <div class="container">
+    <div class="wa-banner gs-fadeUp">
+      <div class="wa-text">
+        <div class="wa-badge">Bot activo ahora</div>
+        <h2>¿Dudas sobre<br><span style="color:var(--green)">qué comprar?</span></h2>
+        <p>Nuestro asesor experto Carlos responde al instante por WhatsApp. Conoce todo el catálogo y te guía según tu nivel y objetivos.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.75rem">
+          <button class="btn btn-wa" onclick="openWhatsAppGeneral()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Chatear con Carlos
+          </button>
+          <a href="catalogo.html" class="btn btn-secondary">Ver catálogo</a>
+        </div>
+      </div>
+      <div class="wa-visual">
+        <div class="wa-phone-icon">📲</div>
+        <span style="font-size:.72rem;color:var(--t2);text-align:center;max-width:120px">Bot disponible<br>todos los días</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent);vertical-align:middle;margin-right:.4rem"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <span>DSC</span> Deutsche Cycling
+        </div>
+        <p class="footer-desc">Equipamiento premium para ciclistas de ruta y montaña. Marcas de élite, asesoría experta.</p>
+        <button class="btn btn-wa btn-sm" style="margin-top:1.25rem" onclick="openWhatsAppGeneral()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          WhatsApp directo
+        </button>
+      </div>
+      <div>
+        <div class="footer-title">Catálogo</div>
+        <ul class="footer-links">
+          <li><a href="catalogo.html?cat=Electr%C3%B3nica">Electrónica GPS</a></li>
+          <li><a href="catalogo.html?cat=Llantas">Llantas</a></li>
+          <li><a href="catalogo.html?cat=Nutrici%C3%B3n">Nutrición</a></li>
+          <li><a href="catalogo.html?cat=Rodillo">Rodillos</a></li>
+          <li><a href="catalogo.html">Ver todo</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-title">Comprar</div>
+        <ul class="footer-links">
+          <li><a href="checkout.html">Mi carrito</a></li>
+          <li><a href="#" onclick="openWhatsAppGeneral();return false">Asesoría WhatsApp</a></li>
+          <li><a href="privacidad.html">Privacidad</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Deutsche Cycling Spot. Todos los derechos reservados.</span>
+      <a href="privacidad.html" style="color:var(--t3);font-size:.8rem">Política de privacidad</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<!-- Cookie banner -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:var(--surface);border-top:1px solid var(--border);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+  <p style="font-size:.83rem;color:var(--t2);margin:0">Usamos almacenamiento local para tu carrito de compras. <a href="privacidad.html" style="color:var(--accent)">Más info</a></p>
+  <button onclick="closeCookieBanner()" class="btn btn-primary btn-sm">Entendido</button>
+</div>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script src="js/products.js"></script>
+<script src="js/store.js"></script>
+<script src="js/whatsapp.js"></script>
+
+<script>
+// ── Cookie banner ────────────────────────────────────────────
+function closeCookieBanner() {
+  document.getElementById('cookieBanner').style.display = 'none';
+  localStorage.setItem('dsc_cookie_ok', '1');
+}
+if (!localStorage.getItem('dsc_cookie_ok')) {
+  document.getElementById('cookieBanner').style.display = 'flex';
+}
+
+// ── Build category grid ──────────────────────────────────────
+const CAT_DESCS = {
+  'Electrónica':'GPS, radar, infladores',
+  'Nutrición':'Geles y electrolitos',
+  'Llantas':'Ruta, gravel y MTB',
+  'Accesorio':'Soportes y fundas',
+  'Sensor':'Cadencia y velocidad',
+  'Rodillo':'Indoor training',
+  'Mantenimiento':'Parches y herramientas',
+  'Tubos':'Cámaras de aire'
+};
+
+function buildCatGrid() {
+  const cats = getCategories();
+  const grid = document.getElementById('catGrid');
+  grid.innerHTML = cats.map(cat => {
+    const count = PRODUCTS.filter(p => p.category === cat).length;
+    const icon = CATEGORY_ICONS[cat] || '🚴';
+    return `<a href="catalogo.html?cat=${encodeURIComponent(cat)}" class="cat-card">
+      <div class="cat-icon">${icon}</div>
+      <div class="cat-name">${cat}</div>
+      <div class="cat-count">${count} producto${count !== 1 ? 's' : ''}</div>
+    </a>`;
+  }).join('');
+}
+
+function buildFeatured() {
+  const featured = PRODUCTS.filter(p => p.stock > 0).slice(0, 8);
+  document.getElementById('featuredGrid').innerHTML =
+    featured.map(p => renderProductCard(p, true)).join('');
+}
+
+buildCatGrid();
+buildFeatured();
+
+// ── GSAP Animations ──────────────────────────────────────────
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero entrance
+const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+heroTl
+  .from('#heroEyebrow', { opacity: 0, y: 20, duration: .7, delay: .3 })
+  .from('#heroTitle', { opacity: 0, y: 50, duration: .9 }, '-=.3')
+  .from('#heroSub', { opacity: 0, y: 30, duration: .7 }, '-=.5')
+  .from('#heroActions', { opacity: 0, y: 20, duration: .6 }, '-=.4');
+
+// Hero image parallax on scroll
+gsap.to('#heroImg', {
+  yPercent: 20,
+  ease: 'none',
+  scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+});
+
+// Stats count-up with stagger
+gsap.from('.gs-stat', {
+  opacity: 0,
+  y: 30,
+  stagger: .1,
+  duration: .6,
+  ease: 'power2.out',
+  scrollTrigger: { trigger: '#statsStrip', start: 'top 85%' }
+});
+
+// Category cards stagger
+gsap.from('#catGrid .cat-card', {
+  opacity: 0,
+  y: 40,
+  stagger: .07,
+  duration: .6,
+  ease: 'power2.out',
+  scrollTrigger: { trigger: '#catGrid', start: 'top 80%' }
+});
+
+// Product cards stagger
+gsap.from('#featuredGrid .product-card', {
+  opacity: 0,
+  y: 50,
+  stagger: .06,
+  duration: .65,
+  ease: 'power2.out',
+  scrollTrigger: { trigger: '#featuredGrid', start: 'top 80%' }
+});
+
+// Lifestyle banners scale reveal
+document.querySelectorAll('.gs-scale').forEach(el => {
+  gsap.from(el, {
+    scale: .97,
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 85%' }
+  });
+});
+
+// Section headers fade up
+document.querySelectorAll('.gs-fadeUp').forEach(el => {
+  gsap.from(el, {
+    opacity: 0,
+    y: 30,
+    duration: .7,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 85%' }
+  });
+});
+
+// WA banner
+gsap.from('.wa-banner', {
+  opacity: 0,
+  y: 40,
+  duration: .8,
+  ease: 'power2.out',
+  scrollTrigger: { trigger: '.wa-banner', start: 'top 85%' }
+});
+</script>
+</body>
+</html>
