@@ -43,8 +43,6 @@ async function generateResponse(phone, userMessage) {
     max_tokens: 600,
     system: SYSTEM_PROMPT,
     messages,
-    // Prompt caching para el system prompt (ahorra costos al tener catálogo grande)
-    betas: ['prompt-caching-2024-07-31']
   });
 
   const assistantText = response.content[0].text;

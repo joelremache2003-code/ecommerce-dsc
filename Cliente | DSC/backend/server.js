@@ -39,16 +39,22 @@ app.post('/webhook/whatsapp', async (req, res) => {
       body: reply
     });
   } catch (err) {
-    console.error('Error procesando mensaje:', err.message);
+    console.error('❌ Error procesando mensaje:', JSON.stringify({
+      message: err.message,
+      status: err.status,
+      code: err.code,
+      detail: err.response?.data || err.error || null,
+    }, null, 2));
 
-    // Mensaje de fallback si falla Claude
     try {
       await twilioClient.messages.create({
         from: process.env.TWILIO_WHATSAPP_NUMBER,
         to: from,
         body: 'Hola, en este momento tenemos un inconveniente técnico. Por favor escríbenos en unos minutos 🚴 — Equipo DSC'
       });
-    } catch (_) {}
+    } catch (fallbackErr) {
+      console.error('❌ Error fallback Twilio:', fallbackErr.message);
+    }
   }
 });
 
