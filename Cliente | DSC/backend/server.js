@@ -2,9 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const twilio = require('twilio');
 const cors = require('cors');
-const { initDB, saveOrder } = require('./db');
+const { initDB, saveOrder, getConversationsNeedingReminder } = require('./db');
 const { generateResponse } = require('./bot');
 const { notifyOwner } = require('./telegram');
+const { getProducts, findProductInText } = require('./sheets');
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,9 @@ const twilioClient = twilio(
   process.env.TWILIO_AUTH_TOKEN
 );
 
+const PHOTO_KEYWORDS = ['foto', 'imagen', 'muéstrame', 'muestrame', 'cómo se ve', 'como se ve', 'ver el producto', 'picture'];
+const wantsPhoto = msg => PHOTO_KEYWORDS.some(k => msg.toLowerCase().includes(k));
+
 // Health check para Railway
 app.get('/', (req, res) => {
   res.json({ status: 'ok', service: 'DSC WhatsApp Bot', timestamp: new Date().toISOString() });
@@ -23,11 +27,10 @@ app.get('/', (req, res) => {
 
 // Webhook que recibe mensajes de Twilio
 app.post('/webhook/whatsapp', async (req, res) => {
-  // Responder a Twilio inmediatamente con 200 (evita reintentos)
   res.status(200).send('<Response></Response>');
 
   const incomingMsg = req.body.Body?.trim();
-  const from = req.body.From; // formato: "whatsapp:+593XXXXXXXXX"
+  const from = req.body.From;
 
   if (!incomingMsg || !from) return;
 
@@ -39,6 +42,25 @@ app.post('/webhook/whatsapp', async (req, res) => {
       to: from,
       body: reply
     });
+
+    // Si el cliente pide una foto, buscar el producto y enviar imagen
+    if (wantsPhoto(incomingMsg)) {
+      try {
+        const products = await getProducts();
+        if (products) {
+          const product = findProductInText(incomingMsg + ' ' + reply, products);
+          if (product && product.foto_url) {
+            await twilioClient.messages.create({
+              from: process.env.TWILIO_WHATSAPP_NUMBER,
+              to: from,
+              mediaUrl: [product.foto_url],
+            });
+          }
+        }
+      } catch (photoErr) {
+        console.warn('⚠️ No se pudo enviar foto:', photoErr.message);
+      }
+    }
   } catch (err) {
     console.error('❌ Error procesando mensaje:', JSON.stringify({
       message: err.message,
@@ -88,9 +110,35 @@ app.get('/orders', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
+// Recordatorios automáticos: revisa conversaciones inactivas cada 15 min
+const remindedRecently = new Map();
+const REMIND_COOLDOWN = 12 * 60 * 60 * 1000;
+
+function startReminderJob() {
+  setInterval(async () => {
+    try {
+      const stale = await getConversationsNeedingReminder();
+      for (const { phone } of stale) {
+        const lastRemind = remindedRecently.get(phone) || 0;
+        if (Date.now() - lastRemind < REMIND_COOLDOWN) continue;
+        remindedRecently.set(phone, Date.now());
+        await twilioClient.messages.create({
+          from: process.env.TWILIO_WHATSAPP_NUMBER,
+          to: phone,
+          body: '¡Hola! Siguiendo con nuestra conversación — ¿tienes alguna duda sobre el producto o el pedido? Estoy aquí para ayudarte 🚴 — DSC'
+        });
+        console.log(`📨 Recordatorio enviado a ${phone}`);
+      }
+    } catch (err) {
+      console.warn('⚠️ Error en job de recordatorios:', err.message);
+    }
+  }, 15 * 60 * 1000);
+}
+
 initDB().finally(() => {
   app.listen(PORT, () => {
     console.log(`DSC Bot corriendo en puerto ${PORT}`);
     console.log(`Webhook: POST /webhook/whatsapp`);
   });
+  startReminderJob();
 });

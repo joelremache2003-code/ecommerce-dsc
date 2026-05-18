@@ -97,4 +97,33 @@ async function saveOrder(phone, customerName, customerCity, items, total) {
   return res.rows[0].id;
 }
 
-module.exports = { initDB, getHistory, saveMessage, saveOrder };
+async function getConversationsNeedingReminder() {
+  const now = Date.now();
+  const minAge = 55 * 60 * 1000;
+  const maxAge = 75 * 60 * 1000;
+
+  if (!dbReady) {
+    const result = [];
+    for (const [phone, messages] of memConversations.entries()) {
+      if (!messages.length) continue;
+      const last = messages[messages.length - 1];
+      if (last.role !== 'assistant') continue;
+      const age = now - (last.created_at ? new Date(last.created_at).getTime() : 0);
+      if (age >= minAge && age <= maxAge) result.push({ phone });
+    }
+    return result;
+  }
+
+  const res = await pool.query(`
+    SELECT DISTINCT ON (phone) phone, role, created_at
+    FROM conversations
+    ORDER BY phone, created_at DESC
+  `);
+  return res.rows.filter(row => {
+    if (row.role !== 'assistant') return false;
+    const age = now - new Date(row.created_at).getTime();
+    return age >= minAge && age <= maxAge;
+  }).map(row => ({ phone: row.phone }));
+}
+
+module.exports = { initDB, getHistory, saveMessage, saveOrder, getConversationsNeedingReminder };

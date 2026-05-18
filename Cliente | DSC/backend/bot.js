@@ -1,10 +1,11 @@
 const Anthropic = require('@anthropic-ai/sdk');
 const { buildProductsContext } = require('./products-context');
+const { getProducts, buildContextFromProducts } = require('./sheets');
 const { getHistory, saveMessage } = require('./db');
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-const SYSTEM_PROMPT = `Eres Carlos, asesor de Deutsche Cycling Spot (DSC) — tienda premium de ciclismo en Ecuador.
+const SYSTEM_BASE = `Eres Carlos, asesor de Deutsche Cycling Spot (DSC) — tienda premium de ciclismo en Ecuador.
 
 Tu estilo:
 - Cálido, directo y técnico: como un ciclista experimentado que sabe exactamente qué recomendar
@@ -21,9 +22,20 @@ Reglas ABSOLUTAS:
 6. Para confirmar un pedido: pide nombre completo y ciudad, luego resume el pedido con total
 7. Si no tienes exactamente lo que piden: dilo con honestidad y ofrece la alternativa más cercana disponible
 
-${buildProductsContext()}
+LOGÍSTICA DE ENVÍOS:
+- Quito norte/centro: entrega el mismo día vía moto o Uber — pregunta siempre el sector específico del cliente
+- Quito sur/valles (Los Chillos, Cumbayá, Tumbaco, Calderón): coordinar tiempo, probablemente mismo día
+- Provincias: hora de corte para despacho es las 16:30 hora Ecuador. Si el cliente escribe después de las 16:30, dile amablemente que su pedido saldrá mañana a primera hora y llegará ese mismo día. Antes de las 16:30, el pedido puede salir hoy.
+- Usa la hora actual inyectada abajo para determinar si aplica el corte de envío.`;
 
-Deutsche Cycling Spot — Ecuador | Envíos a todo el país`;
+function getEcuadorTime() {
+  return new Date().toLocaleString('es-EC', {
+    timeZone: 'America/Guayaquil',
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
 
 function cleanForWhatsApp(text) {
   return text
@@ -32,8 +44,22 @@ function cleanForWhatsApp(text) {
     .replace(/^- /gm, '• ');
 }
 
+async function buildSystemPrompt() {
+  const hora = getEcuadorTime();
+  let catalogContext;
+  try {
+    const sheetProducts = await getProducts();
+    catalogContext = buildContextFromProducts(sheetProducts);
+  } catch (_) {}
+  if (!catalogContext) catalogContext = buildProductsContext();
+
+  return `${SYSTEM_BASE}\n\nHora actual en Ecuador: ${hora}\n\n${catalogContext}\n\nDeutsche Cycling Spot — Ecuador | Envíos a todo el país`;
+}
+
 async function generateResponse(phone, userMessage) {
   const history = await getHistory(phone, 10);
+
+  const [systemPrompt] = await Promise.all([buildSystemPrompt()]);
 
   const messages = [
     ...history.map(h => ({ role: h.role, content: h.content })),
@@ -43,7 +69,7 @@ async function generateResponse(phone, userMessage) {
   const response = await client.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 600,
-    system: SYSTEM_PROMPT,
+    system: systemPrompt,
     messages,
   });
 
