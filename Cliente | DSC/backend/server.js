@@ -17,7 +17,7 @@ const twilioClient = twilio(
   process.env.TWILIO_AUTH_TOKEN
 );
 
-const PHOTO_KEYWORDS = ['foto', 'imagen', 'muéstrame', 'muestrame', 'cómo se ve', 'como se ve', 'ver el producto', 'picture'];
+const PHOTO_KEYWORDS = ['foto', 'imagen', 'muéstrame', 'muestrame', 'cómo se ve', 'como se ve', 'ver el producto', 'picture', 'show'];
 const wantsPhoto = msg => PHOTO_KEYWORDS.some(k => msg.toLowerCase().includes(k));
 
 // Health check para Railway
@@ -43,30 +43,30 @@ app.post('/webhook/whatsapp', async (req, res) => {
       body: reply
     });
 
-    // Si el cliente pide una foto, buscar el producto y enviar imagen
-    if (wantsPhoto(incomingMsg)) {
-      try {
-        const products = await getProducts();
-        if (products) {
-          const product = findProductInText(incomingMsg + ' ' + reply, products);
-          if (product && product.foto_url) {
-            await twilioClient.messages.create({
-              from: process.env.TWILIO_WHATSAPP_NUMBER,
-              to: from,
-              mediaUrl: [product.foto_url],
-            });
-          }
-          if (product && product.canva_url) {
-            await twilioClient.messages.create({
-              from: process.env.TWILIO_WHATSAPP_NUMBER,
-              to: from,
-              body: `Ver más fotos del producto: ${product.canva_url}`,
-            });
-          }
+    // Enviar foto proactivamente si el bot está hablando de un producto con imagen disponible
+    try {
+      const products = await getProducts();
+      if (products) {
+        // Buscar producto en la respuesta del bot (proactivo) o en el mensaje del usuario (explícito)
+        const searchText = reply + ' ' + incomingMsg;
+        const product = findProductInText(searchText, products);
+        if (product && product.foto_url) {
+          await twilioClient.messages.create({
+            from: process.env.TWILIO_WHATSAPP_NUMBER,
+            to: from,
+            mediaUrl: [product.foto_url],
+          });
         }
-      } catch (photoErr) {
-        console.warn('⚠️ No se pudo enviar foto:', photoErr.message);
+        if (product && product.canva_url) {
+          await twilioClient.messages.create({
+            from: process.env.TWILIO_WHATSAPP_NUMBER,
+            to: from,
+            body: `📸 Ver todas las fotos: ${product.canva_url}`,
+          });
+        }
       }
+    } catch (photoErr) {
+      console.warn('⚠️ No se pudo enviar foto:', photoErr.message);
     }
   } catch (err) {
     console.error('❌ Error procesando mensaje:', JSON.stringify({
