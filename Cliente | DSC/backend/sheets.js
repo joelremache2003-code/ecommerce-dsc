@@ -23,14 +23,24 @@ function parseCSVLine(line) {
 }
 
 function parseCSV(csv) {
-  const lines = csv.split('\n').filter(l => l.trim());
-  if (lines.length < 2) return [];
-  const headers = parseCSVLine(lines[0]).map(h => h.toLowerCase().replace(/\s+/g, '_'));
-  return lines.slice(1).map(line => {
+  const allLines = csv.split('\n');
+
+  // Find the actual header row (the one that starts with "id")
+  const headerLineIdx = allLines.findIndex(l => /^id[\s,]/i.test(l.trim()));
+  if (headerLineIdx === -1) return [];
+
+  const dataLines = allLines.slice(headerLineIdx).filter(l => l.trim());
+  if (dataLines.length < 2) return [];
+
+  const headers = parseCSVLine(dataLines[0]).map(h => h.trim().toLowerCase().replace(/\s+/g, '_'));
+
+  return dataLines.slice(1).map(line => {
     const values = parseCSVLine(line);
     const obj = {};
-    headers.forEach((h, i) => { obj[h] = values[i] || ''; });
-    obj.price = parseFloat(obj.price) || 0;
+    headers.forEach((h, i) => {
+      if (h) obj[h] = (values[i] || '').trim();
+    });
+    obj.price = parseFloat((obj.price || '').replace(/[$,\s]/g, '')) || 0;
     obj.stock = parseInt(obj.stock) || 0;
     return obj;
   }).filter(p => p.id && p.name);
@@ -38,7 +48,7 @@ function parseCSV(csv) {
 
 async function getProducts() {
   const url = process.env.GOOGLE_SHEET_CSV_URL;
-  if (!url) return null; // no sheet configured, caller will use static fallback
+  if (!url) return null;
 
   if (cache && Date.now() - cacheTime < CACHE_TTL) return cache;
 
@@ -50,11 +60,12 @@ async function getProducts() {
     if (products.length > 0) {
       cache = products;
       cacheTime = Date.now();
+      console.log(`✅ Google Sheets: ${products.length} productos cargados`);
     }
     return cache;
   } catch (err) {
     console.warn('⚠️ Google Sheets fetch error:', err.message);
-    return cache; // return stale cache if available
+    return cache;
   }
 }
 
@@ -65,16 +76,18 @@ function buildContextFromProducts(products) {
   const outOfStock = products.filter(p => p.stock === 0).map(p => p.name);
 
   const CATEGORY_LABELS = {
+    'ciclocomputadores': 'Ciclocomputadores GPS',
+    'electrónica': 'GPS, sensores, luces y accesorios tech',
+    'electronica': 'GPS, sensores, luces y accesorios tech',
+    'luces': 'Luces y seguridad vial',
+    'sensor': 'Sensores de rendimiento',
     'llantas': 'Llantas de ruta, gravel y MTB',
     'nutrición': 'Nutrición deportiva de alto rendimiento',
     'nutricion': 'Nutrición deportiva de alto rendimiento',
-    'electrónica': 'GPS, sensores, luces y accesorios tech',
-    'electronica': 'GPS, sensores, luces y accesorios tech',
     'rodillo': 'Rodillos inteligentes para entrenamiento indoor',
-    'sensor': 'Sensores de rendimiento',
     'accesorio': 'Accesorios y complementos',
     'mantenimiento': 'Repuestos, tubos y mantenimiento',
-    'tubos': 'Repuestos, tubos y mantenimiento',
+    'tubos': 'Repuestos y tubos',
   };
 
   const byCategory = available.reduce((acc, p) => {
@@ -104,11 +117,23 @@ function buildContextFromProducts(products) {
 function findProductInText(text, products) {
   if (!products) return null;
   const lower = text.toLowerCase();
-  return products.find(p =>
-    (p.id && lower.includes(p.id.toLowerCase())) ||
-    lower.includes(p.name.toLowerCase()) ||
-    (p.brand && lower.includes(p.brand.toLowerCase()) && lower.includes((p.category || '').toLowerCase()))
-  ) || null;
+
+  // Exact product ID match
+  const byId = products.find(p => p.id && lower.includes(p.id.toLowerCase()));
+  if (byId) return byId;
+
+  // Keyword scoring: find product with most name-words matching the text
+  let bestScore = 0;
+  let bestProduct = null;
+  for (const p of products) {
+    const words = p.name.toLowerCase().split(/\s+/).filter(w => w.length > 2);
+    const score = words.filter(w => lower.includes(w)).length;
+    if (score > bestScore) {
+      bestScore = score;
+      bestProduct = p;
+    }
+  }
+  return bestScore > 0 ? bestProduct : null;
 }
 
 module.exports = { getProducts, buildContextFromProducts, findProductInText };
